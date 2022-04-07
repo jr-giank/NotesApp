@@ -3,6 +3,8 @@ from Notes.models import Note
 from .serializers import Notes
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Create your views here.
 @api_view(['GET'])
@@ -12,7 +14,9 @@ def api(request):
         'notes': 'notes/list',
         'create': 'notes/create',
         'update': 'notes/update',
-        'delete': 'notes/delete'
+        'delete': 'notes/delete',
+        'token': 'token',
+        'token refresh': 'token/refresh'
     }
 
     return Response(api_urls)
@@ -53,3 +57,18 @@ def deleteNote(request, id):
     note.delete()
 
     return Response('Nota Eliminada')
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        token['email'] = user.email
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
