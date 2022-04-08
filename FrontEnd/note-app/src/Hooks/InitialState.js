@@ -25,21 +25,23 @@ export const InitialState = () => {
         }
     }
 
+    const logOut = () => {
+        setAutorizacionToken(null);
+        setUser(null);
+        localStorage.removeItem('autorizacionToken');
+    }
+
     const registerService = async (values) => {
-        let response = await fetch("", {
+        let response = await fetch("http://127.0.0.1:8000/api/sign/up", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(values)
         })
-    
-        let data = await response.json();
-    
+        
         if (response.status === 200){
-            setAutorizacionToken(data);
-            setUser(data);
-            localStorage.setItem('autorizacionToken', JSON.stringify(data));
+            
         }else{
             alert('Ha ocurrido un error');
         }
@@ -49,6 +51,7 @@ export const InitialState = () => {
         user,
         autorizacionToken,
         registerService,
-        loginService
+        loginService,
+        logOut
     }
 }

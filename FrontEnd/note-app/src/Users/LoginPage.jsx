@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import { AppContext } from "../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import "../styles/LoginPage.css"
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/LoginPage.css";
 
 const loginSchema = yup.object().shape({
     username: yup.string()
@@ -24,9 +24,12 @@ export const LoginPage = () => {
                 initialValues={{username:'', password:''}}
                 validationSchema={loginSchema}
                 onSubmit={values => {
-                    loginService(values).then(
+                    async function login(){
+                        await loginService(values)
                         navigate('/')
-                    )
+                    }
+
+                    login();
                 }}
             >
                 {({errors, touched}) => (
@@ -58,8 +61,12 @@ export const LoginPage = () => {
                                 <div className='ErrorsLogin'>{errors.password}</div>
                             ) : null}
                         </div>
+                        
+                        <div>
+                            <p>¿No tienes una cuenta aún? <Link to='sign/up'>Crear</Link></p>
+                        </div>
 
-                        <button type="submit" className="buttonLogin">Registrarse</button>
+                        <button type="submit" className="buttonLogin">Acceder</button>
                     </Form>
                 )}
             </Formik>

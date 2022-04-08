@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../Context/AuthContext";
 
 export const Home = () => {
+    const {logOut} = useContext(AppContext);
+    
     return(
-        <h1>Hello World</h1>
+        <div>
+            <h1>Hello World</h1>
+        </div>  
     )
 }

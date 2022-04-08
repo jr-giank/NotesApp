@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
 from Notes.models import Note
-from .serializers import Notes
+from .serializers import Notes, SignUp
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -15,6 +15,7 @@ def api(request):
         'create': 'notes/create',
         'update': 'notes/update',
         'delete': 'notes/delete',
+        'register-user': 'sign/up',
         'token': 'token',
         'token refresh': 'token/refresh'
     }
@@ -57,6 +58,24 @@ def deleteNote(request, id):
     note.delete()
 
     return Response('Nota Eliminada')
+
+@api_view(['POST'])
+def signUp(request):
+
+    serializer = SignUp(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def listUsers(request):
+
+    users = User.objects.all()
+    serializer = SignUp(users, many=True)
+
+    return Response(serializer.data)
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

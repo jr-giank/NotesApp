@@ -1,7 +1,9 @@
-import React from "react";
-import "../styles/RegisterPage.css"
+import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
+import { AppContext } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import "../styles/RegisterPage.css"
 
 //Validaciones de campos
 const registerSchema =  yup.object().shape({
@@ -20,12 +22,22 @@ const registerSchema =  yup.object().shape({
 })
 
 export const RegisterPage = () => {
+    const {registerService} = useContext(AppContext);
+    const navigate = useNavigate();
+
     return(
         <div>
             <Formik
                 initialValues={{first_name:"", last_name:"", username:"", email:"", password:""}}
                 validationSchema={registerSchema}
-                // onSubmit={}
+                onSubmit={values => {
+                    async function register(){
+                        await registerService(values)
+                        navigate('/login')
+                    }
+
+                    register();
+                }}
             >
                 {({errors, touched}) => (
                     <Form className="Form">
@@ -96,7 +108,7 @@ export const RegisterPage = () => {
                             ) : null}
                         </div>
 
-                        <button className="button">Registrarse</button>
+                        <button type="submit" className="button">Registrarse</button>
                     </Form>
                 )}
             </Formik>
