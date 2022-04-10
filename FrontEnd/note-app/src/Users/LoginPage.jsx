@@ -62,10 +62,8 @@ export const LoginPage = () => {
                             ) : null}
                         </div>
                         
-                        <div>
-                            <p>¿No tienes una cuenta aún? <Link to='sign/up'>Crear</Link></p>
-                        </div>
-
+                        <p>¿No tienes una cuenta aún? <Link to={'/sign/up'}>Crear</Link></p>
+                        
                         <button type="submit" className="buttonLogin">Acceder</button>
                     </Form>
                 )}
