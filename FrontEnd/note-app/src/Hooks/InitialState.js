@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 
 export const InitialState = () => {
     const [autorizacionToken, setAutorizacionToken] = useState(() => localStorage.getItem('autorizacionToken') ? JSON.parse(localStorage.getItem('autorizacionToken')) : null)
     const [user, setUser] = useState(() => localStorage.getItem('autorizacionToken') ? jwt_decode(localStorage.getItem('autorizacionToken')) : null);     
+    const [loading, setLoading] = useState(true);
 
     const loginService = async (values) => {
         let response = await fetch("http://127.0.0.1:8000/api/token/", {
@@ -25,6 +26,27 @@ export const InitialState = () => {
         }
     }
 
+    const updateToken = async () => {
+        console.log("Calling update token");
+        let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'refresh':autorizacionToken.refresh})
+        })
+
+        let data = await response.json();
+
+        if(response.status === 200){
+            setAutorizacionToken(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('autorizacionToken', JSON.stringify(data));
+        }else{
+            logOut();
+        }
+    } 
+
     const logOut = () => {
         setAutorizacionToken(null);
         setUser(null);
@@ -32,7 +54,7 @@ export const InitialState = () => {
     }
 
     const registerService = async (values) => {
-        let response = await fetch("http://127.0.0.1:8000/api/sign/up", {
+        let response = await fetch("http://127.0.0.1:8000/api/sign/up/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,11 +69,25 @@ export const InitialState = () => {
         }
     }
 
+    useEffect(() => {
+        let time = 1000 * 60 * 4
+
+        let interval = setInterval(() => {
+            if(autorizacionToken){
+                updateToken();
+            }
+        }, time)
+
+        return () => clearInterval(interval)
+
+    }, [autorizacionToken, loading])
+
     return{
         user,
         autorizacionToken,
         registerService,
         loginService,
+        updateToken,
         logOut
     }
 }

@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from Notes.models import Note
 from .serializers import Notes, SignUp
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -23,9 +24,11 @@ def api(request):
     return Response(api_urls)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def listNotes(request):
 
-    notes = Note.objects.all()
+    user = request.user
+    notes = user.note_set.all()
     serializer = Notes(notes, many=True)
 
     return Response(serializer.data)
