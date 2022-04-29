@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/AuthContext";
 import { getNotes } from "../Services/getNotes";
+import { createNote } from "../Services/createNote";
+import "../styles/HomePage.css";
 
 export const Home = () => {
     
@@ -13,19 +15,35 @@ export const Home = () => {
             setNotes(data);
         })
     }, []);
+
+    const nota = document.getElementById('nota');
     
     return(
-        <div>
-            <h1>Home Page</h1>
+        <div className="HomeContainer">
 
-            <ul>
-                {notes.map(note => (
-                    <li key={note.id}>
-                        <h3>{note.title}</h3>
-                        <p>{note.body}</p>
-                    </li>
-                ))}
-            </ul>
+            <div className="Container">
+                <div className="NoteContainer">
+                    <input id="nota" placeholder="Nota" type="text"/>
+                    <button onClick={() => createNote(autorizacionToken.access, nota.value).then(response => {
+                        // alert(response);
+                        console.log(response);
+                    })}>Enviar</button>
+                </div>
+                <ul>
+                    {notes.map(note => (
+                        <li key={note.id}>
+                            <div className="note">
+                                <p>{note.body}</p>
+                            </div>
+                            <div className="buttons">
+                                <button className="button" id="editar">Editar</button>
+                                <button className="button" id="eliminar">Eliminar</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                <button onClick={() => console.log(nota.value, autorizacionToken)}>Nota</button>
+            </div>
         </div>  
     )
 }

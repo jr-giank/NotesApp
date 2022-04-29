@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@200&display=swap');
+
+.HomeContainer{
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    background: rgb(54,217,182);
+    background: linear-gradient(90deg, rgba(54,217,182,1) 0%, rgba(32,152,126,1) 43%, rgba(0,212,255,1) 100%);
+    display: flex;
+    font-family: sans-serif, serif;
+}
+
+.Container{
+    background-color: #ffff;
+    width: 50vw;
+    margin: 20vh auto auto auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 11px 6px rgba(14,14,14,0.21);
+}
+
+.Container .NoteContainer{
+    width: 100%;
+    display: flex;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.Container .NoteContainer input{
+    margin: 5% 0 5% auto;
+    width: 80%;
+    padding: 8px;
+    font-family: sans-serif serif;
+    font-size: medium;
+    color: rgba(0, 0, 0, 0.779);
+}
+
+.Container .NoteContainer button{
+    padding: 0 2% 0 2%;
+    margin: 5% auto 5% 0%;
+    border: none;
+    background-color: rgba(54,217,182,1);
+    color: #ffff;
+    border-radius: 2%;
+    cursor: pointer;
+}
+
+.Container .NoteContainer input:focus{
+    outline: none;
+}
+
+.Container ul{
+    width: 100%;
+    padding: 0;
+}
+
+.Container ul li{
+    display: flex;
+    border-bottom: 1px solid #e4eaef;
+    padding: 3% 2.5% 3% 2.5%;
+}
+
+.Container ul li .note{
+    flex: 7;
+    margin: 0;  
+}
+
+.Container ul li .buttons{
+    margin: auto 0 auto 0;
+}
+
+.Container ul li .buttons .button:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.Container ul li .buttons .button:first-child{
+    margin-right: 4px;
+}
+
+.Container ul li #editar{
+    background-color: #ffffff40;
+    border: 1px solid rgba(0,212,255,1);
+    border-radius: 4px;
+}
+
+.Container ul li #eliminar{
+    background-color: #ffffff40;
+    border: 1px solid #c1121f;
+    border-radius: 4px;
+}
