@@ -7,7 +7,7 @@ import "../styles/HomePage.css";
 export const Home = () => {
     
     const {logOut} = useContext(AppContext);
-    const { autorizacionToken } = useContext(AppContext);
+    const { autorizacionToken, user } = useContext(AppContext);
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
@@ -17,16 +17,15 @@ export const Home = () => {
     }, []);
 
     const nota = document.getElementById('nota');
-    
+
     return(
         <div className="HomeContainer">
 
             <div className="Container">
                 <div className="NoteContainer">
                     <input id="nota" placeholder="Nota" type="text"/>
-                    <button onClick={() => createNote(autorizacionToken.access, nota.value).then(response => {
-                        // alert(response);
-                        console.log(response);
+                    <button onClick={() => createNote(autorizacionToken.access, user.user_id, nota.value).then(response => {
+                        alert(response);
                     })}>Enviar</button>
                 </div>
                 <ul>
@@ -42,7 +41,6 @@ export const Home = () => {
                         </li>
                     ))}
                 </ul>
-                <button onClick={() => console.log(nota.value, autorizacionToken)}>Nota</button>
             </div>
         </div>  
     )

@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.http.response import JsonResponse
+from django.views import View
 from Notes.models import Note
 from .serializers import Notes, SignUp
 from rest_framework.response import Response
@@ -6,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+import json
 
 # Create your views here.
 @api_view(['GET'])
@@ -35,7 +38,7 @@ def listNotes(request):
 
 @api_view(['POST'])
 def createNote(request):
-
+    
     serializer = Notes(data=request.data)
 
     if serializer.is_valid():
