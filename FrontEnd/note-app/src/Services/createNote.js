@@ -1,5 +1,5 @@
 
-function getCookie(name){
+const getCookie = (name) => {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
@@ -20,7 +20,7 @@ export const createNote = async (autorizacion, user, value) => {
     if(value != ""){
         var csrftoken = getCookie('csrftoken');
         
-        let response = await fetch("http://127.0.0.1:8000/api/notes/create/", {
+        const response = await fetch("http://127.0.0.1:8000/api/notes/create/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
