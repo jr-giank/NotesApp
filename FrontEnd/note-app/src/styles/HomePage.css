@@ -10,6 +10,22 @@
     font-family: sans-serif, serif;
 }
 
+.HomeContainer #logOut{
+    top: 5vh;
+    right: 5vw;
+    height: 40px;
+    position: absolute;
+    background-color: #76c893;
+    border-color: #ffff;
+    border-style: dashed;
+    color: #ffff;
+}
+
+.HomeContainer #logOut:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
 .Container{
     background-color: #ffff;
     width: 50vw;

@@ -8,8 +8,7 @@ import "../styles/HomePage.css";
 
 export const Home = () => {
     
-    const {logOut} = useContext(AppContext);
-    const { autorizacionToken, user } = useContext(AppContext);
+    const { logOut, autorizacionToken, user } = useContext(AppContext);
     const [notes, setNotes] = useState([]);
     
     let updateNoteId = 0;
@@ -24,7 +23,7 @@ export const Home = () => {
 
     return(
         <div className="HomeContainer">
-
+            <button id="logOut" onClick={logOut}>Cerrar Sesión</button>
             <div className="Container">
                 <div className="NoteContainer">
                     <input id="nota" placeholder="Nota" type="text"/>

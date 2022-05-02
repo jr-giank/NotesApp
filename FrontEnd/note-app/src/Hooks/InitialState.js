@@ -22,12 +22,11 @@ export const InitialState = () => {
             setUser(jwt_decode(data.access));
             localStorage.setItem('autorizacionToken', JSON.stringify(data));
         }else{
-            alert('Ha ocurrido un error');
+            alert('Usuario o contraseña incorrectos');
         }
     }
 
     const updateToken = async () => {
-        console.log("Calling update token");
         let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
             method: 'POST',
             headers: {
@@ -63,7 +62,7 @@ export const InitialState = () => {
         })
         
         if (response.status === 200){
-            
+            alert('El usuario se a registrado con exito')
         }else{
             alert('Ha ocurrido un error');
         }
